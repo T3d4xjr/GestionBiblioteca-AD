@@ -36,10 +36,10 @@ public class GestionBiblioteca {
                 añadirAutor(sc);
                 break;
             case 3:
-                modificarAutor();
+                modificarAutor(sc);
                 break;
             case 4:
-                eliminarAutor();
+                eliminarAutor(sc);
                 break;
             case 5:
                 listarLibros();
@@ -89,11 +89,30 @@ public class GestionBiblioteca {
         AutorDAO.añadirAutor(nombre, fecha, nacionalidad, n_obras, biografia);
         
     }
-    private  static void modificarAutor(){
-    
+    private  static void modificarAutor(Scanner sc){
+        sc.nextLine();
+        System.out.println("Indica el id a modificar");
+        int id =sc.nextInt();
+        sc.nextLine();
+        System.out.println("Indica el nombre del autor");
+        String nombre=sc.nextLine();
+        System.out.println("Indica la fecha en formato YYYY-MM-DD:");
+        String fecha=sc.nextLine();
+        System.out.println("Indique su nacionalidad");
+        String nacionalidad =sc.nextLine();
+        System.out.println("Indique el numero de obras del autor");
+        int n_obras=sc.nextInt();
+        sc.nextLine(); 
+       System.out.println("Indique su biografia");
+        String biografia=sc.nextLine();
+        AutorDAO.modificarAutor(id, nombre, fecha, nacionalidad, n_obras, biografia);
     }
-    private  static void eliminarAutor(){
-    
+    private  static void eliminarAutor(Scanner sc){
+        sc.nextLine();
+        System.out.println("Indica el id a eliminar");
+        int id =sc.nextInt();
+        
+        AutorDAO.eliminarAutor(id);
     }
     private  static void listarLibros(){
     

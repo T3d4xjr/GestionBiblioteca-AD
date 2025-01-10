@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -81,12 +83,53 @@ public class AutorDAO {
             int row=stmt.executeUpdate();
             
             if(row == 0){
-                System.err.println("Error al modifciar el autor");
+                System.err.println("Error al modificar el autor");
             }else{
                 System.out.println("Autor modificado correctamente");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+    public static void eliminarAutor(int id){
+        try {
+            Conexion.startTransaction();
+            
+            try {
+                String sql="DELETE FROM libro WHERE id_autor= ?";
+                PreparedStatement stmt =Conexion.getPreparedStatement(sql);
+                
+                stmt.setInt(1, id);
+                
+                int row=stmt.executeUpdate();
+            
+                if(row == 0){
+                    System.err.println("Error al eliminar el libro");
+                }else{
+                    System.out.println("Libro eliminado correctamente");
+                }
+                
+                
+                String sql2="DELETE FROM autor WHERE id = ?";
+                PreparedStatement stmt2 =Conexion.getPreparedStatement(sql2);
+                
+                stmt2.setInt(1, id);
+                
+                int row2=stmt2.executeUpdate();
+            
+                if(row2 == 0){
+                    System.err.println("Error al eliminar el autor");
+                }else{
+                    System.out.println("Autor eliminado correctamente");
+                }
+                
+                Conexion.commit();
+            } catch (SQLException e) {
+                Conexion.rollback();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(AutorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
