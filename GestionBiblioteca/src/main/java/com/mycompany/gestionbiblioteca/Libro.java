@@ -13,16 +13,16 @@ public class Libro {
     private String titulo;
     private String fecha_publicacion;
     private String genero;
-    private String isdbn;
+    private String isbn;
     private String editorial;
-    private String id_autor;
+    private int id_autor;
 
-    public Libro(int id, String titulo, String fecha_publicacion, String genero, String isdbn, String editorial, String id_autor) {
+    public Libro(int id, String titulo, String fecha_publicacion, String genero, String isbn, String editorial, int id_autor) {
         this.id = id;
         this.titulo = titulo;
         this.fecha_publicacion = fecha_publicacion;
         this.genero = genero;
-        this.isdbn = isdbn;
+        this.isbn = isbn;
         this.editorial = editorial;
         this.id_autor = id_autor;
     }
@@ -59,12 +59,12 @@ public class Libro {
         this.genero = genero;
     }
 
-    public String getIsdbn() {
-        return isdbn;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setIsdbn(String isdbn) {
-        this.isdbn = isdbn;
+    public void setIsbn(String isdbn) {
+        this.isbn = isbn;
     }
 
     public String getEditorial() {
@@ -75,17 +75,19 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public String getId_autor() {
+    public int getId_autor() {
         return id_autor;
     }
 
-    public void setId_autor(String id_autor) {
+    public void setId_autor(int id_autor) {
         this.id_autor = id_autor;
     }
 
     @Override
     public String toString() {
-        return "Libro{" + "id=" + id + ", titulo=" + titulo + ", fecha_publicacion=" + fecha_publicacion + ", genero=" + genero + ", isdbn=" + isdbn + ", editorial=" + editorial + ", id_autor=" + id_autor + '}';
+        return "Libro{" + "id=" + id + ", titulo=" + titulo + ", fecha_publicacion=" + fecha_publicacion + ", genero=" + genero + ", isbn=" + isbn + ", editorial=" + editorial + ", id_autor=" + id_autor + '}';
     }
+
+    
     
 }

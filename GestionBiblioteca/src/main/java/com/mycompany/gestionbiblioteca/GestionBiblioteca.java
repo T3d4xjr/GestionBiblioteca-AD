@@ -45,13 +45,13 @@ public class GestionBiblioteca {
                 listarLibros();
                 break;
             case 6:
-                añadirLibro();
+                añadirLibro(sc);
                 break;
             case 7:
-                modificarLibro();
+                modificarLibro(sc);
                 break;
             case 8:
-                eliminarLibro();
+                eliminarLibro(sc);
                 break;
             case 9:
                 System.out.println("Saliendo....");
@@ -115,16 +115,60 @@ public class GestionBiblioteca {
         AutorDAO.eliminarAutor(id);
     }
     private  static void listarLibros(){
-    
+        ArrayList<Libro> libros =LibroDAO.listarLibros();
+        for (Libro libro : libros) {
+            System.out.println(libro.getId()+","
+                    +libro.getTitulo()+","
+                    +libro.getFecha_publicacion()+","
+                    +libro.getGenero()+","
+                    +libro.getIsbn()+","
+                    +libro.getEditorial()+","
+                    +libro.getId_autor());
+        }
     }
-    private  static void añadirLibro(){
-    
+    private  static void añadirLibro(Scanner sc){
+        sc.nextLine();
+        System.out.println("Indica el titulo del libro");
+        String titulo=sc.nextLine();
+        System.out.println("Indica la fecha en formato YYYY-MM-DD:");
+        String fecha=sc.nextLine();
+        System.out.println("Indique su genero");
+        String genero =sc.nextLine();
+        System.out.println("Indique el isbn");
+        String isbn=sc.nextLine();
+        System.out.println("Indique su editorial");
+        String editorial=sc.nextLine();
+        System.out.println("Indique el id del autor");
+        int id_autor=sc.nextInt();
+        
+        LibroDAO.añadirLibro(titulo, fecha, genero, isbn, editorial,id_autor);
     }
-    private  static void modificarLibro(){
-    
+    private  static void modificarLibro(Scanner sc){
+        sc.nextLine();
+        System.out.println("Indica el id a modificar");
+        int id =sc.nextInt();
+        sc.nextLine();
+        System.out.println("Indica el titulo del libro");
+        String titulo=sc.nextLine();
+        System.out.println("Indica la fecha en formato YYYY-MM-DD:");
+        String fecha=sc.nextLine();
+        System.out.println("Indique su genero");
+        String genero =sc.nextLine();
+        System.out.println("Indique el isbn");
+        String isbn=sc.nextLine();
+        System.out.println("Indique su editorial");
+        String editorial=sc.nextLine();
+        System.out.println("Indique el id del autor");
+        int id_autor=sc.nextInt();
+        
+        LibroDAO.modificarLibro(id, titulo, fecha, genero, isbn, editorial, id_autor);
     }
-    private  static void eliminarLibro(){
-    
+    private  static void eliminarLibro(Scanner sc){
+        sc.nextLine();
+        System.out.println("Indica el id a eliminar");
+        int id =sc.nextInt();
+        
+        LibroDAO.eliminarLibro(id);
     }
     
     
