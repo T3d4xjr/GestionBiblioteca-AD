@@ -27,6 +27,11 @@ public class Cliente {
     @Column(name = "fecha_baja")
     private String fechaBaja;
 
+    public Cliente() {
+    }
+    
+    
+
     public Cliente( String nombre, String email, String fechaRegistro, String fechaBaja) {
         this.nombre = nombre;
         this.email = email;

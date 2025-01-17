@@ -26,8 +26,16 @@ public class Main {
         try {
             transaction =session.beginTransaction();
             
-            Cliente cliente=new Cliente("Paquito", "hola@gmail.com", "2024-12-12", null);
+            Cliente cliente=new Cliente("pepe", "hola@gmail.com", "2024-12-12", null);
+            //insertar
             session.persist(cliente);
+            
+            //update
+            // cliente.setId(1);
+            // session.merge(cliente);
+            //delete
+            // cliente.setId(1);
+            // session.delete(cliente);
             System.out.println("Cliente guardado correctamente");
             transaction.commit();
         } catch (Exception e) {
