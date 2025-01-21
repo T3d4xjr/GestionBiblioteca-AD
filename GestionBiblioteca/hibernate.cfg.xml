@@ -6,7 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
 
 <hibernate-configuration>
     <session-factory>
-  	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/inicioHybernate</property>
+  	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gestionBiblioteca</property>
         <property name="hibernate.connection.username">2dam</property>
         <property name="hibernate.connection.password">2dam</property>
     </session-factory>
