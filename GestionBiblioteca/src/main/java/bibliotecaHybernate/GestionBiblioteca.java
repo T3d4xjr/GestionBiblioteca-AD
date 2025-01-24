@@ -22,11 +22,16 @@ public class GestionBiblioteca {
         System.out.println("2. Añadir autor");
         System.out.println("3. Actualizar autor");
         System.out.println("4. Borrar autor");
-        System.out.println("5. Listar libros");
-        System.out.println("6. Añadir libro");
-        System.out.println("7. Actualizar libro");
-        System.out.println("8. Eliminar libro");
-        System.out.println("9. Salir");
+        System.out.println("5. Listar autor por id");
+        System.out.println("6. Listar autor por fragmento de nombre");
+        System.out.println("7. Listar libros");
+        System.out.println("8. Añadir libro");
+        System.out.println("9. Actualizar libro");  
+        System.out.println("10. Eliminar libro");
+        System.out.println("11. Listar libro por id");
+        System.out.println("12. Listar libro por fragmento de libro");
+        System.out.println("13. Listar libros por id del autor");
+        System.out.println("14. Salir");
         int opcion = sc.nextInt();
 
         switch (opcion) {
@@ -43,18 +48,33 @@ public class GestionBiblioteca {
                 eliminarAutor(sc);
                 break;
             case 5:
-                listarLibros();
+                selectIdAutor(sc);
                 break;
             case 6:
-                añadirLibro(sc);
+                selectFragmentoNombre(sc);
                 break;
             case 7:
-                modificarLibro(sc);
+                listarLibros();
                 break;
             case 8:
-                eliminarLibro(sc);
+                añadirLibro(sc);
                 break;
             case 9:
+                modificarLibro(sc);
+                break;
+            case 10:
+                eliminarLibro(sc);
+                break;
+            case 11:
+                selectIdLibro(sc);
+                break;
+            case 12:
+                selectFragmentoTitulo(sc);
+                break;
+            case 13:
+                seletcLibrosIdAutor(sc);
+                break;
+            case 14:
                 System.out.println("Saliendo....");
                 break;
             default:
@@ -97,7 +117,7 @@ public class GestionBiblioteca {
         int n_obras = sc.nextInt();
         sc.nextLine();
         System.out.println("Indique su biografia");
-        String biografia=sc.nextLine();
+        String biografia = sc.nextLine();
         autorDAO.updateAutor(id, nombre, fecha, nacionalidad, n_obras, biografia);
     }
 
@@ -106,6 +126,19 @@ public class GestionBiblioteca {
         System.out.println("Indica el id a eliminar");
         int id = sc.nextInt();
         autorDAO.deleteAutor(id);
+    }
+
+    private static void selectIdAutor(Scanner sc) {
+        sc.nextLine();
+        System.out.println("Indica el id a del autor a ver");
+        int id = sc.nextInt();
+        autorDAO.selectPorIdAutor(id);
+    }
+    private static void selectFragmentoNombre(Scanner sc) {
+        sc.nextLine();
+        System.out.println("Indica el fragemento de nombre del autor a ver");
+        String nombre = sc.nextLine();
+        autorDAO.selectPorFragmentoNombre(nombre);
     }
 
     private static void listarLibros() {
@@ -126,7 +159,7 @@ public class GestionBiblioteca {
         String editorial = sc.nextLine();
         System.out.println("Indique el id del autor");
         int id_autor = sc.nextInt();
-        
+
         libroDAO.insertLibro(titulo, fecha, genero, isbn, editorial, id_autor);
 
     }
@@ -148,7 +181,7 @@ public class GestionBiblioteca {
         String editorial = sc.nextLine();
         System.out.println("Indique el id del autor");
         int id_autor = sc.nextInt();
-        
+
         libroDAO.updateLibro(id, titulo, fecha, genero, isbn, editorial, id_autor);
 
     }
@@ -157,9 +190,27 @@ public class GestionBiblioteca {
         sc.nextLine();
         System.out.println("Indica el id a eliminar");
         int id = sc.nextInt();
-        
+
         libroDAO.deleteAutor(id);
 
+    }
+    private static void selectIdLibro (Scanner sc) {
+        sc.nextLine();
+        System.out.println("Indica el id a del libro a ver");
+        int id = sc.nextInt();
+        libroDAO.selectPorIdLibro(id);
+    }
+    private static void selectFragmentoTitulo(Scanner sc) {
+        sc.nextLine();
+        System.out.println("Indica el fragmento de titulo del libro a ver");
+        String titulo = sc.nextLine();
+        libroDAO.selectPorFragmentoTitulo(titulo);
+    }
+    private static void seletcLibrosIdAutor(Scanner sc) {
+        sc.nextLine();
+        System.out.println("Indica el id_autor del los libros a ver");
+        int id = sc.nextInt();
+        libroDAO.listarLibrosIdAutor(id);
     }
 
 }

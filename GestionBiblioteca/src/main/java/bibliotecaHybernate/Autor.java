@@ -5,6 +5,8 @@
 package bibliotecaHybernate;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "autor")
@@ -24,7 +26,18 @@ public class Autor {
     private int n_obras;
     @Column(name = "biografia")
     private String biografia;
+    
+    @OneToMany(mappedBy = "autor")
+    private List<Libro> libros=new ArrayList<>();
 
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+    
     public Autor() {
     }
 

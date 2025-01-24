@@ -28,7 +28,8 @@ public class LibroDAO {
         Session session = Conexion.getSession();
         Transaction transaction = Conexion.startTransaction();
         try {
-            Libro libro=new Libro(titulo, fecha, genero, isbn, editorial, id_autor);
+            Autor autor=session.get(Autor.class, id_autor);
+            Libro libro=new Libro(titulo, fecha, genero, isbn, editorial, autor);
             session.persist(libro);
 
             System.out.println("Libro creado correctamente");
@@ -47,7 +48,8 @@ public class LibroDAO {
         Session session = Conexion.getSession();
         Transaction transaction = Conexion.startTransaction();
         try {
-            Libro libro=new Libro(titulo, fecha, genero, isbn, editorial, id_autor);
+             Autor autor=session.get(Autor.class, id_autor);
+            Libro libro=new Libro(titulo, fecha, genero, isbn, editorial, autor);
             libro.setId(id);
             session.merge(libro);
 
@@ -79,4 +81,34 @@ public class LibroDAO {
             session.close();
         }
     }
+    public void selectPorIdLibro(int idLibro) {
+        Session session = Conexion.getSession();
+
+        Libro libro = session.createQuery("FROM Libro WHERE id = :idLibro", Libro.class)
+                .setParameter("idLibro", idLibro).getSingleResult();
+
+            System.out.println(libro);
+        
+    }
+    public void selectPorFragmentoTitulo(String titulo) {
+        Session session = Conexion.getSession();
+
+        Libro libro = session.createQuery("FROM Libro WHERE titulo LIKE :titulo", Libro.class)
+                .setParameter("nombre", "%"+titulo+"%").getSingleResult();
+
+            System.out.println(libro);
+        
+    }
+    public void listarLibrosIdAutor(int idAutor){
+        Session session=Conexion.getSession();
+        
+        List<Libro> libros=session.createQuery("FROM Libro WHERE autor.id = :idAutor",Libro.class)
+                .setParameter("idAutor", idAutor).getResultList();
+        
+        for (Libro libro : libros) {
+            System.out.println(libro);
+        }
+    
+    }
+    
 }

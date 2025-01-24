@@ -5,7 +5,6 @@
 package bibliotecaHybernate;
 
 import jakarta.persistence.*;
-import java.lang.annotation.Target;
 
 /**
  *
@@ -30,19 +29,20 @@ public class Libro {
     @Column(name = "editorial")
     private String editorial;
     
-    @Column(name = "id_autor")
-    private int id_autor;
+    @ManyToOne
+    @JoinColumn(name = "id_autor",referencedColumnName = "id")
+    private Autor autor;
 
     public Libro() {
     }
 
-    public Libro(String titulo, String fecha_publicacion, String genero, String isbn, String editorial, int id_autor) {
+    public Libro(String titulo, String fecha_publicacion, String genero, String isbn, String editorial, Autor autor) {
         this.titulo = titulo;
         this.fecha_publicacion = fecha_publicacion;
         this.genero = genero;
         this.isbn = isbn;
         this.editorial = editorial;
-        this.id_autor = id_autor;
+        this.autor = autor;
     }
 
     public int getId() {
@@ -93,17 +93,21 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public int getId_autor() {
-        return id_autor;
+    public Autor getAutor() {
+        return autor;
     }
 
-    public void setId_autor(int id_autor) {
-        this.id_autor = id_autor;
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
 
     @Override
     public String toString() {
-        return "Libro{" + "id=" + id + ", titulo=" + titulo + ", fecha_publicacion=" + fecha_publicacion + ", genero=" + genero + ", isbn=" + isbn + ", editorial=" + editorial + ", id_autor=" + id_autor + '}';
+        return "Libro{" + "id=" + id + ", titulo=" + titulo + ", fecha_publicacion=" + fecha_publicacion + ", genero=" + genero + ", isbn=" + isbn + ", editorial=" + editorial + ", autor=" + autor + '}';
     }
+
+    
+
+    
 
 }

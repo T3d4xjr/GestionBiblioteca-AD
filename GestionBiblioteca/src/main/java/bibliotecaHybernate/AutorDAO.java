@@ -63,13 +63,7 @@ public class AutorDAO {
         Session session = Conexion.getSession();
         Transaction transaction = Conexion.startTransaction();
         try {
-            List<Libro> libros = session.createQuery("FROM Libro WHERE id_autor = :id", Libro.class)
-                    .setParameter("id", id)
-                    .getResultList();
-
-            for (Libro libro : libros) {
-                session.delete(libro);
-            }
+            
             Autor autor = new Autor();
             autor.setId(id);
             session.delete(autor);
@@ -82,6 +76,24 @@ public class AutorDAO {
         } finally {
             session.close();
         }
+    }
+    public void selectPorIdAutor(int idCliente) {
+        Session session = Conexion.getSession();
+
+        Autor autor = session.createQuery("FROM Autor WHERE id = :idCliente", Autor.class)
+                .setParameter("idCliente", idCliente).getSingleResult();
+
+            System.out.println(autor);
+        
+    }
+    public void selectPorFragmentoNombre(String nombre) {
+        Session session = Conexion.getSession();
+
+        Autor autor = session.createQuery("FROM Autor WHERE nombre LIKE :nombre", Autor.class)
+                .setParameter("nombre", "%"+nombre+"%").getSingleResult();
+
+            System.out.println(autor);
+        
     }
 
 }
