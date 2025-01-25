@@ -70,7 +70,7 @@ public class LibroDAO {
             
             Libro libro=new Libro();
             libro.setId(id);
-            session.delete(libro);
+            session.remove(libro);
             
             System.out.println("Libro eliminado correctamente");
 

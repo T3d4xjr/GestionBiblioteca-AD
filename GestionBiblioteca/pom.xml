@@ -18,9 +18,9 @@
             <version>8.0.33</version>
         </dependency>
         <dependency>
-        <groupId>org.hibernate.orm</groupId>
-        <artifactId>hibernate-core</artifactId>
-        <version>6.6.4.Final</version>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.6.4.Final</version>
         </dependency>
         
     </dependencies>
