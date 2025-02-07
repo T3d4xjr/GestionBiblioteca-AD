@@ -56,8 +56,7 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    public Pedido(int id, String fecha, String cliente) {
-        this.id = id;
+    public Pedido( String fecha, String cliente) {
         this.fecha = fecha;
         this.cliente = cliente;
     }
@@ -96,8 +95,10 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" + "id=" + id + ", fecha=" + fecha + ", cliente=" + cliente + ", detallePedidoList=" + detallePedidoList + '}';
+        return "Pedido{" + "id=" + id + ", fecha=" + fecha + ", cliente=" + cliente + '}';
     }
+
+    
 
     
     

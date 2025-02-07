@@ -13,6 +13,12 @@ import org.hibernate.Transaction;
  * @author tedax
  */
 public class ProductoDAO {
+
+    public static Producto obtenerProductoPorId(int idProducto) {
+        
+        return null;
+        
+    }
     public void añadirProducto(String nombre, int stock , double precio) {
         Session session = Conexion.getSession();
         Transaction transaction = Conexion.startTransaction();

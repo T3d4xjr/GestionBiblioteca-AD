@@ -23,5 +23,8 @@ public class PedidoDAO {
             
         }
     }
+    public  void registrarPedido(Pedido pedido){
+    
+    }
     
 }

@@ -4,12 +4,14 @@
  */
 package Ejercicio4;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static ProductoDAO productoDAO = new ProductoDAO();
-    private static PedidoDAO pedidoDAO = new PedidoDAO();
-    private static  DetallePedidoDAO detallePedidoDAO=new DetallePedidoDAO();
+    private static final ProductoDAO productoDAO = new ProductoDAO();
+    private static final PedidoDAO pedidoDAO = new PedidoDAO();
+    private static final  DetallePedidoDAO detallePedidoDAO=new DetallePedidoDAO();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -81,8 +83,36 @@ public class Main {
         productoDAO.listarProductosStock(stockMaximo);
     }
     
-    private static void anadirPedido() {
-   
+private static void anadirPedido() {
+        System.out.print("Fecha del pedido: ");
+        String fecha = scanner.nextLine();
+        System.out.print("Cliente del pedido: ");
+        String cliente = scanner.nextLine();
+
+        List<DetallePedido> detallesPedido = new ArrayList<>();
+
+        while (true) {
+            System.out.print("ID del producto (o 0 para terminar): ");
+            int idProducto = scanner.nextInt();
+            if (idProducto == 0) break;
+
+            System.out.print("Cantidad: ");
+            int cantidad = scanner.nextInt();
+
+            Producto producto = ProductoDAO.obtenerProductoPorId(idProducto);
+            if (producto == null) {
+                System.out.println("Producto no encontrado.");
+                continue;
+            }
+            if (cantidad >producto.getStock()){
+                System.out.println("La cantidad introducida es mayor a la del stock");
+                break;
+            }
+
+        }
+
+        Pedido pedido = new Pedido( fecha, cliente);
+        pedidoDAO.registrarPedido(pedido);
     }
     
     private static void listarPedidos() {
