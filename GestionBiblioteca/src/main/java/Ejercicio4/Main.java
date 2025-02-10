@@ -88,9 +88,9 @@ private static void anadirPedido() {
         String fecha = scanner.nextLine();
         System.out.print("Cliente del pedido: ");
         String cliente = scanner.nextLine();
-
+        
         List<DetallePedido> detallesPedido = new ArrayList<>();
-
+        
         while (true) {
             System.out.print("ID del producto (o 0 para terminar): ");
             int idProducto = scanner.nextInt();
@@ -98,21 +98,11 @@ private static void anadirPedido() {
 
             System.out.print("Cantidad: ");
             int cantidad = scanner.nextInt();
+            scanner.nextLine(); 
 
-            Producto producto = ProductoDAO.obtenerProductoPorId(idProducto);
-            if (producto == null) {
-                System.out.println("Producto no encontrado.");
-                continue;
-            }
-            if (cantidad >producto.getStock()){
-                System.out.println("La cantidad introducida es mayor a la del stock");
-                break;
-            }
-
+            pedidoDAO.procesarPedido(fecha, cliente, idProducto, cantidad, detallesPedido);
+            
         }
-
-        Pedido pedido = new Pedido( fecha, cliente);
-        pedidoDAO.registrarPedido(pedido);
     }
     
     private static void listarPedidos() {
