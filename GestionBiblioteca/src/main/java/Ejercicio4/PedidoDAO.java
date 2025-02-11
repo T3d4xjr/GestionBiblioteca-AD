@@ -31,10 +31,10 @@ public class PedidoDAO {
         try {
             Producto producto = session.get(Producto.class, idProducto);
             if (producto == null) {
-                System.out.println("Producto no encontrado.");
+                throw  new  Exception ("Producto no encontrado.");
             }
             if (cantidad > producto.getStock()) {
-                System.out.println("Stock insuficiente para el producto: " + producto.getNombre());
+                throw  new  Exception("Stock insuficiente para el producto: " + producto.getNombre());
             }
             Pedido pedido = new Pedido(fecha, cliente);
             session.persist(pedido);
