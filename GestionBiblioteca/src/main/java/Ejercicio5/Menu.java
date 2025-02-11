@@ -107,23 +107,23 @@ public class Menu {
     }
 
     private static void anadirEmpleado() {
-        System.out.print("Nombre del empleado: ");
+        System.out.println("Nombre del empleado: ");
         String nombre = scanner.nextLine();
-        System.out.print("DNI del empleado: ");
+        System.out.println("DNI del empleado: ");
         String dni = scanner.nextLine();
-        System.out.print("Departamento: ");
+        System.out.println("Departamento: ");
         String departamento = scanner.nextLine();
-        System.out.print("Sueldo: ");
-        double sueldo = scanner.nextDouble();
+        System.out.println("Sueldo: ");
+        float sueldo = scanner.nextFloat();
         scanner.nextLine(); // Limpiar buffer
-        System.out.print("Fecha de contratación (YYYY-MM-DD): ");
+        System.out.println("Fecha de contratación (YYYY-MM-DD): ");
         String fechaContratacionStr = scanner.nextLine();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaContratacion = format.parse(fechaContratacionStr);
-            empleadoDAO.añadirOActualizarEmpleado(nombre, dni, departamento, sueldo, fechaContratacion); // Ahora no retorna nada
-            System.out.println("Empleado añadido o actualizado exitosamente.");
+            empleadoDAO.añadirOActualizarEmpleado(nombre, dni, departamento, sueldo, fechaContratacion);
+            
         } catch (ParseException e) {
             System.out.println("Error en la fecha de contratación.");
         }
@@ -131,38 +131,30 @@ public class Menu {
 
     // --- Modificar empleado ---
     private static void modificarEmpleado() {
-        System.out.print("ID del empleado a modificar: ");
+        System.out.println("ID del empleado a modificar: ");
         int idEmpleado = scanner.nextInt();
         scanner.nextLine();  // Limpiar buffer
-        System.out.print("Nuevo nombre: ");
+        System.out.println("Nuevo nombre: ");
         String nombre = scanner.nextLine();
-        System.out.print("Nuevo departamento: ");
+        System.out.println("Nuevo departamento: ");
         String departamento = scanner.nextLine();
-        System.out.print("Nuevo sueldo: ");
-        double sueldo = scanner.nextDouble();
+        System.out.println("Nuevo sueldo: ");
+        float sueldo = scanner.nextFloat();
 
-        if (empleadoDAO.modificarEmpleado(idEmpleado, nombre, departamento, sueldo)) {
-            System.out.println("Empleado modificado exitosamente.");
-        } else {
-            System.out.println("Empleado no encontrado.");
-        }
+        empleadoDAO.modificarEmpleado(idEmpleado, nombre, departamento, sueldo);
     }
 
     // --- Despedir empleado ---
     private static void despedirEmpleado() {
-        System.out.print("ID del empleado a despedir: ");
+        System.out.println("ID del empleado a despedir: ");
         int idEmpleado = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer
-        System.out.print("Fecha de despido (YYYY-MM-DD): ");
+        System.out.println("Fecha de despido (YYYY-MM-DD): ");
         String fechaDespidoStr = scanner.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaDespido = format.parse(fechaDespidoStr);
-            if (empleadoDAO.despedirEmpleado(idEmpleado, fechaDespido)) {
-                System.out.println("Empleado despedido exitosamente.");
-            } else {
-                System.out.println("Empleado no encontrado o ya está despedido.");
-            }
+            empleadoDAO.despedirEmpleado(idEmpleado, fechaDespido);
         } catch (ParseException e) {
             System.out.println("Error en la fecha de despido.");
         }
@@ -188,19 +180,18 @@ public class Menu {
 
     // --- Añadir proyecto ---
     private static void anadirProyecto() {
-        System.out.print("Nombre del proyecto: ");
+        System.out.println("Nombre del proyecto: ");
         String nombre = scanner.nextLine();
-        System.out.print("Fecha de inicio (YYYY-MM-DD): ");
+        System.out.println("Fecha de inicio (YYYY-MM-DD): ");
         String fechaInicioStr = scanner.nextLine();
-        System.out.print("Fecha de finalización (YYYY-MM-DD): ");
+        System.out.println("Fecha de finalización (YYYY-MM-DD): ");
         String fechaFinStr = scanner.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaInicio = format.parse(fechaInicioStr);
             Date fechaFin = format.parse(fechaFinStr);
             if (fechaFin.after(fechaInicio)) {
-                int idProyecto = proyectoDAO.añadirProyecto(nombre, fechaInicio, fechaFin);
-                System.out.println("Proyecto añadido exitosamente. ID: " + idProyecto);
+                proyectoDAO.añadirProyecto(nombre, fechaInicio, fechaFin);
             } else {
                 System.out.println("La fecha de finalización debe ser posterior a la fecha de inicio.");
             }
@@ -211,25 +202,27 @@ public class Menu {
 
     // --- Añadir proyecto con empleados ---
     private static void anadirProyectoConEmpleados() {
-        System.out.print("Nombre del proyecto: ");
+        System.out.println("Nombre del proyecto: ");
         String nombre = scanner.nextLine();
-        System.out.print("Fecha de inicio (YYYY-MM-DD): ");
+        System.out.println("Fecha de inicio (YYYY-MM-DD): ");
         String fechaInicioStr = scanner.nextLine();
-        System.out.print("Fecha de finalización (YYYY-MM-DD): ");
+        System.out.println("Fecha de finalización (YYYY-MM-DD): ");
         String fechaFinStr = scanner.nextLine();
-        System.out.print("IDs de empleados (separados por espacios): ");
+        System.out.println("IDs de empleados (separados por espacios): ");
         String[] idsEmpleadoStr = scanner.nextLine().split(" ");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaInicio = format.parse(fechaInicioStr);
             Date fechaFin = format.parse(fechaFinStr);
             if (fechaFin.after(fechaInicio)) {
-                List<Integer> empleadosIds = new ArrayList<>();
+                List<Empleado> empleados = new ArrayList<>();
                 for (String idStr : idsEmpleadoStr) {
-                    empleadosIds.add(Integer.parseInt(idStr));
+                    int idEmpleado = Integer.parseInt(idStr);
+                    Empleado empleado =new Empleado();
+                    empleado.setId(idEmpleado);
+                    empleados.add(empleado);
                 }
-                int idProyecto = proyectoDAO.añadirProyectoConEmpleados(nombre, fechaInicio, fechaFin, empleadosIds);
-                System.out.println("Proyecto añadido con empleados. ID: " + idProyecto);
+                proyectoDAO.añadirProyectoConEmpleados(nombre, fechaInicio, fechaFin, empleados);
             } else {
                 System.out.println("La fecha de finalización debe ser posterior a la fecha de inicio.");
             }
@@ -240,14 +233,14 @@ public class Menu {
 
     // --- Modificar proyecto ---
     private static void modificarProyecto() {
-        System.out.print("ID del proyecto a modificar: ");
+        System.out.println("ID del proyecto a modificar: ");
         int idProyecto = scanner.nextInt();
         scanner.nextLine();  // Limpiar buffer
-        System.out.print("Nuevo nombre: ");
+        System.out.println("Nuevo nombre: ");
         String nombre = scanner.nextLine();
-        System.out.print("Nueva fecha de inicio (YYYY-MM-DD): ");
+        System.out.println("Nueva fecha de inicio (YYYY-MM-DD): ");
         String fechaInicioStr = scanner.nextLine();
-        System.out.print("Nueva fecha de finalización (YYYY-MM-DD): ");
+        System.out.println("Nueva fecha de finalización (YYYY-MM-DD): ");
         String fechaFinStr = scanner.nextLine();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -269,9 +262,9 @@ public class Menu {
 
     // --- Añadir empleado a un proyecto ---
     private static void anadirEmpleadoAProyecto() {
-        System.out.print("ID del proyecto: ");
+        System.out.println("ID del proyecto: ");
         int idProyecto = scanner.nextInt();
-        System.out.print("ID del empleado: ");
+        System.out.println("ID del empleado: ");
         int idEmpleado = scanner.nextInt();
 
         if (proyectoDAO.anadirEmpleadoAProyecto(idProyecto, idEmpleado)) {
@@ -283,9 +276,9 @@ public class Menu {
 
     // --- Añadir varios empleados a un proyecto ---
     private static void anadirVariosEmpleadosAProyecto() {
-        System.out.print("ID del proyecto: ");
+        System.out.println("ID del proyecto: ");
         int idProyecto = scanner.nextInt();
-        System.out.print("IDs de empleados (separados por espacios): ");
+        System.out.println("IDs de empleados (separados por espacios): ");
         scanner.nextLine(); // Limpiar buffer
         String[] idsEmpleadoStr = scanner.nextLine().split(" ");
 
@@ -303,16 +296,13 @@ public class Menu {
 
     // --- Eliminar empleado de un proyecto ---
     private static void eliminarEmpleadoDeProyecto() {
-        System.out.print("ID del proyecto: ");
+        System.out.println("ID del proyecto: ");
         int idProyecto = scanner.nextInt();
-        System.out.print("ID del empleado: ");
+        System.out.println("ID del empleado: ");
         int idEmpleado = scanner.nextInt();
-
-        if (proyectoDAO.eliminarEmpleadoDeProyecto(idProyecto, idEmpleado)) {
-            System.out.println("Empleado eliminado del proyecto.");
-        } else {
-            System.out.println("Error al eliminar el empleado del proyecto.");
-        }
+        
+        proyectoDAO.eliminarEmpleadoDeProyecto(idProyecto, idEmpleado);
+        System.out.println("Empleado eliminado del proyecto.");
     }
 
     // --- Listar proyectos futuros ---
@@ -347,18 +337,24 @@ public class Menu {
         System.out.print("ID del proyecto: ");
         int idProyecto = scanner.nextInt();
 
-        List<Empleado> empleados = proyectoDAO.listarEmpleadosPorProyecto(idProyecto);
-        Proyecto proyecto = proyectoDAO.obtenerProyecto(idProyecto);
+        List<Empleado> empleados = proyectoDAO.listarDetallesProyecto(idProyecto);
 
-        if (proyecto != null) {
-            System.out.println("Detalles del proyecto: ");
-            System.out.println(proyecto);
-            System.out.println("Empleados asignados:");
-            for (Empleado empleado : empleados) {
-                System.out.println(empleado);
-            }
-        } else {
-            System.out.println("Proyecto no encontrado.");
+        System.out.println("Lista de empleados asociados al proyecto:");
+        for (Empleado empleado : empleados) {
+            System.out.println("ID empleado: " + empleado.getId());
+            System.out.println("Nombre: " + empleado.getNombre());
+            System.out.println("DNI: " + empleado.getDni());
+            System.out.println("Departamento: " + empleado.getDepartamento());
+
+            String estado = "";
+                if (empleado.getFechaFinalizacion() == null) {
+                    estado = "activo";
+                } else {
+                    estado = "despedido";
+                }
+                System.out.println("Estado: " + estado);
+            System.out.println("--------------------------------");
         }
     }
+
 }
