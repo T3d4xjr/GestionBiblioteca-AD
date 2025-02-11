@@ -5,6 +5,8 @@
     <class>Ejercicio4.Pedido</class>
     <class>Ejercicio4.DetallePedido</class>
     <class>Ejercicio4.Producto</class>
+    <class>Ejercicio5.Proyecto</class>
+    <class>Ejercicio5.Empleado</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ad_pedidos?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="2dam"/>
