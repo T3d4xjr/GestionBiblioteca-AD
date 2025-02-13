@@ -58,6 +58,7 @@ public class EmpleadoDAO {
                 empleado.setDepartamento(departamento);
                 empleado.setSueldo(sueldo);
                 empleado.setFechaContratacion(fecha_Contratacion);
+                empleado.setFechaFinalizacion(null);
                 session.merge(empleado);
                 System.out.println("Empleado actualizado exitosamente.");
             }

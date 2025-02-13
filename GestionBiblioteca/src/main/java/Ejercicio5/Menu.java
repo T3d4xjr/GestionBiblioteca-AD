@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.SimpleFormatter;
 
 /**
  *
@@ -123,7 +122,7 @@ public class Menu {
         try {
             Date fechaContratacion = format.parse(fechaContratacionStr);
             empleadoDAO.añadirOActualizarEmpleado(nombre, dni, departamento, sueldo, fechaContratacion);
-            
+
         } catch (ParseException e) {
             System.out.println("Error en la fecha de contratación.");
         }
@@ -215,14 +214,11 @@ public class Menu {
             Date fechaInicio = format.parse(fechaInicioStr);
             Date fechaFin = format.parse(fechaFinStr);
             if (fechaFin.after(fechaInicio)) {
-                List<Empleado> empleados = new ArrayList<>();
+                List<Integer> empleadosIds = new ArrayList<>();
                 for (String idStr : idsEmpleadoStr) {
-                    int idEmpleado = Integer.parseInt(idStr);
-                    Empleado empleado =new Empleado();
-                    empleado.setId(idEmpleado);
-                    empleados.add(empleado);
+                    empleadosIds.add(Integer.valueOf(idStr));
                 }
-                proyectoDAO.añadirProyectoConEmpleados(nombre, fechaInicio, fechaFin, empleados);
+                proyectoDAO.añadirProyectoConEmpleados(nombre, fechaInicio, fechaFin, empleadosIds);
             } else {
                 System.out.println("La fecha de finalización debe ser posterior a la fecha de inicio.");
             }
@@ -300,7 +296,7 @@ public class Menu {
         int idProyecto = scanner.nextInt();
         System.out.println("ID del empleado: ");
         int idEmpleado = scanner.nextInt();
-        
+
         proyectoDAO.eliminarEmpleadoDeProyecto(idProyecto, idEmpleado);
         System.out.println("Empleado eliminado del proyecto.");
     }
@@ -347,12 +343,12 @@ public class Menu {
             System.out.println("Departamento: " + empleado.getDepartamento());
 
             String estado = "";
-                if (empleado.getFechaFinalizacion() == null) {
-                    estado = "activo";
-                } else {
-                    estado = "despedido";
-                }
-                System.out.println("Estado: " + estado);
+            if (empleado.getFechaFinalizacion() == null) {
+                estado = "activo";
+            } else {
+                estado = "despedido";
+            }
+            System.out.println("Estado: " + estado);
             System.out.println("--------------------------------");
         }
     }

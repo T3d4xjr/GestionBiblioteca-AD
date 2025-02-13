@@ -43,7 +43,7 @@ public class ProyectoDAO {
         }
     }
 
-    public void añadirProyectoConEmpleados(String nombre, Date fechaInicio, Date fechaFin, List<Empleado> empleados) {
+    public static void añadirProyectoConEmpleados(String nombre, Date fechaInicio, Date fechaFin, List<Integer> idsEmpleados) {
         Session session = Conexion.getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -54,11 +54,20 @@ public class ProyectoDAO {
             String fecha_fin = sdf.format(fechaFin);
 
             Proyecto proyecto = new Proyecto(nombre, fecha_inicio, fecha_fin);
+            
+            for (Integer idEmpleado : idsEmpleados) {
+                Empleado empleado = session.get(Empleado.class, idEmpleado);
 
-            proyecto.setEmpleadoList(empleados);
+                empleado.getProyectoList().add(proyecto);
+            }
+                
+            
             session.persist(proyecto);
+            
 
             System.out.println("Proyecto id: " + proyecto.getId());
+            
+            
 
             transaction.commit();
         } catch (Exception e) {
